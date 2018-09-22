@@ -19,7 +19,6 @@ export default {
     if (!posting) {
       return
     }
-    posting.date = moment(Date.now()).format('MMM Do YY')
     return firebaseApp.database().ref('posting').push(posting)
   },
   bindFirebaseReferences: firebaseAction(({state, commit, dispatch}, user) => {
@@ -43,4 +42,9 @@ export default {
       bindFirebaseRef(toBind, reference)
     })
   }),
+  deletePost ({state}, ev) {
+    let db = firebaseApp.database()
+    let postingRef = db.ref(`/posting`)
+    postingRef.child(ev).remove()
+  },
 }
